@@ -3,9 +3,18 @@ import {UpdateInvoice, DeleteInvoice} from '@/app/ui/invoices/buttons';
 import InvoiceStatus from '@/app/ui/invoices/status';
 import {formatDateToLocal, formatCurrency} from '@/app/lib/utils';
 import {fetchFilteredInvoices} from '@/app/lib/data';
+import SortButton from './sortButton';
 
-export default async function InvoicesTable({query, currentPage}: {query: string; currentPage: number}) {
-    const invoices = await fetchFilteredInvoices(query, currentPage);
+export default async function InvoicesTable({
+    query,
+    currentPage,
+    order
+}: {
+    query: string;
+    currentPage: number;
+    order: 'ASC' | 'DESC';
+}) {
+    const invoices = await fetchFilteredInvoices(query, currentPage, order);
 
     return (
         <div className="mt-6 flow-root">
@@ -54,6 +63,7 @@ export default async function InvoicesTable({query, currentPage}: {query: string
                                 </th>
                                 <th scope="col" className="px-3 py-5 font-medium">
                                     Amount
+                                    <SortButton />
                                 </th>
                                 <th scope="col" className="px-3 py-5 font-medium">
                                     Date

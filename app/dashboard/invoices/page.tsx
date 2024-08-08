@@ -18,9 +18,11 @@ export default async function Page({
     searchParams?: {
         query?: string;
         page?: string;
+        order?: 'DESC' | 'ASC';
     };
 }) {
     const query = searchParams?.query || '';
+    const order = searchParams?.order || 'ASC';
     const currentPage = Number(searchParams?.page) || 1;
     const totalPages = await fetchInvoicesPages(query);
 
@@ -31,10 +33,11 @@ export default async function Page({
             </div>
             <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
                 <Search placeholder="Search invoices..." />
+                {/* <SortButton /> */}
                 <CreateInvoice />
             </div>
             <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-                <Table query={query} currentPage={currentPage} />
+                <Table query={query} currentPage={currentPage} order={order} />
             </Suspense>
             <div className="mt-5 flex w-full justify-center">
                 <Pagination totalPages={totalPages} />
