@@ -12,7 +12,6 @@ export default function SortButton() {
     const {replace} = useRouter();
     const handleSort = debounce(() => {
         const params = new URLSearchParams(searchParams);
-        console.log(params, searchParams, pathname);
         params.set('order', order);
         replace(`${pathname}?${params.toString()}`);
         setOrder(order === 'ASC' ? 'DESC' : 'ASC');

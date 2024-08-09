@@ -4,17 +4,20 @@ import InvoiceStatus from '@/app/ui/invoices/status';
 import {formatDateToLocal, formatCurrency} from '@/app/lib/utils';
 import {fetchFilteredInvoices} from '@/app/lib/data';
 import SortButton from './sortButton';
+import StatusFilter from './statusFilter';
 
 export default async function InvoicesTable({
     query,
     currentPage,
-    order
+    order,
+    payStatus
 }: {
     query: string;
     currentPage: number;
     order: 'ASC' | 'DESC';
+    payStatus: 'paid' | 'pending' | 'all';
 }) {
-    const invoices = await fetchFilteredInvoices(query, currentPage, order);
+    const invoices = await fetchFilteredInvoices(query, currentPage, order, payStatus);
 
     return (
         <div className="mt-6 flow-root">
@@ -70,6 +73,7 @@ export default async function InvoicesTable({
                                 </th>
                                 <th scope="col" className="px-3 py-5 font-medium">
                                     Status
+                                    <StatusFilter />
                                 </th>
                                 <th scope="col" className="relative py-3 pl-6 pr-3">
                                     <span className="sr-only">Edit</span>
